@@ -4,22 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Feedback extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'pitch_id',  
+        'pitch_id',
         'pdf_path',
-        'content',    
     ];
 
-    public function pitch(): BelongsTo
+    public function pitch()
     {
-        return $this->belongsTo(PitchText::class, 'pitch_id');
+        return $this->belongsTo(Pitch::class);
     }
 }
-
 

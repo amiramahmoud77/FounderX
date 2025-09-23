@@ -263,9 +263,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::middleware('role:admin')->group(function () {
             Route::post('/', [PitchTextController::class, 'store']);
             Route::post('/{pitchText}/mark-scored', [PitchTextController::class, 'markAsScored']);
-            // AI Feedback route (founder only)
-        Route::middleware('role:founder')->post('/{pitchText}/analyze', [PitchTextController::class, 'analyzePitch']);
-
         });
 
         // Founder only pitch-text routes

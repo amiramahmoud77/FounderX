@@ -8,7 +8,7 @@ use App\Http\Requests\UpdatePitchTextRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\Feedback;
+
 class PitchTextController extends Controller
 {
     public function index(Request $request): JsonResponse{
@@ -75,8 +75,7 @@ class PitchTextController extends Controller
 
     public function show(PitchText $pitch){
         try {
-           $pitch->load(['user','score','feedbacks']);
-
+            $pitch->load(['user','score']);
             return response()->json([
                 'success'=>true,
                 'data'=>$pitch,
@@ -177,41 +176,4 @@ class PitchTextController extends Controller
             ],500);
         }
     }
-    public function analyzePitch(Request $request, PitchText $pitch): JsonResponse
-{
-    try {
-      
-        if (Auth::id() !== $pitch->user_id && !Auth::user()->isAdmin()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Not allowed to analyze this pitch'
-            ], 403);
-        }
-
-        
-        $aiFeedback = "This is AI feedback for testing. Your pitch needs more clarity in problem statement.";
-
-       
-        $feedback = Feedback::create([
-            'pitch_id' => $pitch->id,
-            'content' => $aiFeedback,
-            'pdf_path' => null,
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'feedback' => $feedback,
-                'pitch' => $pitch->fresh()
-            ],
-            'message' => 'Feedback generated successfully'
-        ], 201);
-
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Failed to analyze the pitch: ' . $e->getMessage()
-        ], 500);
-    }
-}
 }

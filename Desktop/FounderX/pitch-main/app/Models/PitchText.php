@@ -21,10 +21,6 @@ class PitchText extends Model
     public function score():HasOne{
         return $this->hasOne(Score::class);
     }
-       public function feedbacks(): HasMany
-    {
-        return $this->hasMany(Feedback::class);
-    }
     public function user():BelongsTo{
         return $this->belongsTo(User::class);
     }

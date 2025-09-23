@@ -5,14 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class PitchText extends Model
+class Pitch extends Model
 {
-    /** @use HasFactory<\Database\Factories\PitchTextFactory> */
+    /** @use HasFactory<\Database\Factories\PitchFactory> */
     use HasFactory;
     protected $fillable = [
-        'text',
+        'title',
+        'problem',
+        'solution',
+        'market',
+        'product_tech_stack',
+        'business_model',
+        'competition',
+        'market_strategy',
+        'traction_results',
+        'team_info',
+        'financials_investment',
         'status',
         'user_id',
         'field_id',
@@ -21,12 +32,11 @@ class PitchText extends Model
     public function score():HasOne{
         return $this->hasOne(Score::class);
     }
-       public function feedbacks(): HasMany
-    {
-        return $this->hasMany(Feedback::class);
-    }
     public function user():BelongsTo{
         return $this->belongsTo(User::class);
+    }
+    public function feedbacks(){
+        return $this->hasMany(Feedback::class);
     }
     public function stage():BelongsTo{
         return $this->belongsTo(Stage::class);
@@ -43,4 +53,8 @@ class PitchText extends Model
     public function scopeIssubmitted($query){
         return $query->where('status','submitted');
     }
+    public function teams():HasMany{
+        return $this->hasMany(Team::class);
+    }
+
 }

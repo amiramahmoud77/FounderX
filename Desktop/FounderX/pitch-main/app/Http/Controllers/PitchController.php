@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PitchText;
-use App\Http\Requests\StorePitchTextRequest;
-use App\Http\Requests\UpdatePitchTextRequest;
+use App\Models\Pitch;
+use App\Models\Score;
+use App\Models\User;
+use App\Http\Requests\StorePitchRequest;
+use App\Http\Requests\UpdatePitchRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\Feedback;
-class PitchTextController extends Controller
+use Illuminate\Support\Facades\Auth;
+
+class PitchController extends Controller
 {
-    public function index(Request $request): JsonResponse{
+    public function index(Request $request): JsonResponse
+    {
         try {
-            $query= PitchText::with(['user',"score"]);
+            $query= Pitch::with(['user',"score"]);
             if ($request->has("status")) {
                 $query->where('status',$request->status);
             }
@@ -34,9 +37,10 @@ class PitchTextController extends Controller
         }
     }
 
-    public function myPitches(Request $request): JsonResponse{
+    public function myPitches(Request $request): JsonResponse
+    {
         try {
-            $pitches= PitchText::where('user_id',Auth::id())->with('score')
+            $pitches= Pitch::where('user_id',Auth::id())->with('score')
                 ->orderBy('created_at','desc')->paginate($request->per_page??10);
             return response()->json([
                 'success'=>true,
@@ -51,10 +55,21 @@ class PitchTextController extends Controller
         }
     }
 
-    public function store(StorePitchTextRequest $request): JsonResponse{
+    public function store(StorePitchRequest $request): JsonResponse
+    {
         try {
-            $pitch=PitchText::create([
-                'text'=>$request->text,
+            $pitch=Pitch::create([
+                'title'=>$request->title,
+                'problem'=>$request->problem,
+                'solution'=>$request->solution,
+                'market'=>$request->market,
+                'product_tech_stack'=>$request->product_tech_stack,
+                'business_model'=>$request->business_model,
+                'competition'=>$request->competition,
+                'market_strategy'=>$request->market_strategy,
+                'traction_results'=>$request->traction_results,
+                'team_info'=>$request->team_info,
+                'financials_investment'=>$request->financials_investment,
                 'status'=>$request->status,
                 'field_id'=>$request->field_id,
                 'stage_id'=>$request->stage_id,
@@ -73,10 +88,10 @@ class PitchTextController extends Controller
         }
     }
 
-    public function show(PitchText $pitch){
+    public function show(Pitch $pitch)
+    {
         try {
-           $pitch->load(['user','score','feedbacks']);
-
+            $pitch->load(['user','score']);
             return response()->json([
                 'success'=>true,
                 'data'=>$pitch,
@@ -90,7 +105,8 @@ class PitchTextController extends Controller
         }
     }
 
-    public function update(UpdatePitchTextRequest $request, PitchText $pitch) :JsonResponse{
+    public function update(UpdatePitchRequest $request, Pitch $pitch) :JsonResponse
+    {
         try {
             if (Auth::id()!==$pitch->user_id && !Auth::user()->isAdmin()){
                 return response()->json([
@@ -112,7 +128,8 @@ class PitchTextController extends Controller
         }
     }
 
-    public function destroy(PitchText $pitch):JsonResponse{
+    public function destroy(Pitch $pitch):JsonResponse
+    {
         try {
             if (Auth::id()!==$pitch->user_id && !Auth::user()->isAdmin()){
                 return response()->json([
@@ -133,7 +150,8 @@ class PitchTextController extends Controller
         }
     }
 
-    public function markAsScored(PitchText $pitch) :JsonResponse{
+    public function markAsScored(Pitch $pitch) :JsonResponse
+    {
         try {
             if (Auth::id()===$pitch->user_id || Auth::user()->isAdmin()){
                 $pitch->update(['status'=>"scored"]);
@@ -163,7 +181,7 @@ class PitchTextController extends Controller
                 'message'=>'the status is invalid'
             ],400);
             }
-            $pitches= PitchText::where('status',$status)->with(['user','score'])
+            $pitches= Pitch::where('status',$status)->with(['user','score'])
                 ->orderBy('created_at','desc')->paginate($request->per_page??10);
             return response()->json([
                 'success'=>true,
@@ -177,41 +195,6 @@ class PitchTextController extends Controller
             ],500);
         }
     }
-    public function analyzePitch(Request $request, PitchText $pitch): JsonResponse
-{
-    try {
-      
-        if (Auth::id() !== $pitch->user_id && !Auth::user()->isAdmin()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Not allowed to analyze this pitch'
-            ], 403);
-        }
-
-        
-        $aiFeedback = "This is AI feedback for testing. Your pitch needs more clarity in problem statement.";
-
-       
-        $feedback = Feedback::create([
-            'pitch_id' => $pitch->id,
-            'content' => $aiFeedback,
-            'pdf_path' => null,
-        ]);
-
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'feedback' => $feedback,
-                'pitch' => $pitch->fresh()
-            ],
-            'message' => 'Feedback generated successfully'
-        ], 201);
-
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Failed to analyze the pitch: ' . $e->getMessage()
-        ], 500);
-    }
 }
-}
+
+
