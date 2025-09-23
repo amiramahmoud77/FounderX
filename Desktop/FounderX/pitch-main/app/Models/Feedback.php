@@ -11,21 +11,12 @@ class Feedback extends Model
 
     protected $fillable = [
         'pitch_id',
-        'pdf_path', 
-        'content',
-        'ai_response',
-        'analysis_date'
-    ];
-
-    protected $casts = [
-        'ai_response' => 'array',
-        'analysis_date' => 'datetime'
+        'pdf_path',
     ];
 
     public function pitch()
     {
-        return $this->belongsTo(PitchText::class, 'pitch_id');
+        return $this->belongsTo(Pitch::class);
     }
 }
-
 

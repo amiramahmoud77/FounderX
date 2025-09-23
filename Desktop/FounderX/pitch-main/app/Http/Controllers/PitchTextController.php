@@ -8,7 +8,6 @@ use App\Http\Requests\UpdatePitchTextRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\Feedback;
 
 class PitchTextController extends Controller
 {
@@ -76,8 +75,7 @@ class PitchTextController extends Controller
 
     public function show(PitchText $pitch){
         try {
-           $pitch->load(['user','score','feedbacks']);
-
+            $pitch->load(['user','score']);
             return response()->json([
                 'success'=>true,
                 'data'=>$pitch,
@@ -178,80 +176,4 @@ class PitchTextController extends Controller
             ],500);
         }
     }
-   public function analyzePitch(Request $request, PitchText $pitch): JsonResponse
-{
-    try {
-        
-        if (Auth::id() !== $pitch->user_id && !Auth::user()->isAdmin()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Not allowed to analyze this pitch'
-            ], 403);
-        }
-
-        $aiResponse = $request->all();
-
-        $feedback = Feedback::create([
-            'pitch_id' => $pitch->id,
-            'content' => json_encode($aiResponse), 
-            'pdf_path' => null,
-        ]);
-
-        
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'feedback' => $aiResponse,
-                'pitch_id' => $pitch->id,
-                'analysis_date' => now()->toDateTimeString(),
-                'stored_feedback_id' => $feedback->id,
-                'message' => 'AI response saved successfully'
-            ],
-            'message' => 'Pitch analysis saved to database'
-        ], 201);
-
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Failed to analyze pitch: ' . $e->getMessage()
-        ], 500);
-    }
-}public function getAIResponses(PitchText $pitch): JsonResponse
-{
-    try {
-        if (Auth::id() !== $pitch->user_id && !Auth::user()->isAdmin()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Not allowed to view AI responses'
-            ], 403);
-        }
-
-        $responses = Feedback::where('pitch_id', $pitch->id)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return response()->json([
-            'success' => true,
-            'data' => [
-                'pitch_id' => $pitch->id,
-                'ai_responses' => $responses->map(function ($feedback) {
-                    return [
-                        'id' => $feedback->id,
-                        'content' => $feedback->content,
-                        'ai_response' => $feedback->ai_response,
-                        'analysis_date' => $feedback->analysis_date,
-                        'created_at' => $feedback->created_at
-                    ];
-                })
-            ],
-            'message' => 'AI responses retrieved successfully'
-        ]);
-
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Failed to retrieve AI responses: ' . $e->getMessage()
-        ], 500);
-    }
-}
 }
