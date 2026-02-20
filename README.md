@@ -4,14 +4,7 @@
 Backend service for **FounderX**, an AI-powered platform that evaluates startup pitches and generates structured scoring & feedback.
 
 Built with **Laravel 10**, it handles user authentication, pitch storage, AI integration, and secure API responses for the mobile app.
-<div align="center">
-  <h1>FounderX – Backend (Laravel API)</h1>
-  <p><strong>AI-Powered Startup Pitch Evaluation Platform</strong></p>
-  <p>Secure Laravel backend that analyzes startup pitches, integrates with AI, and delivers structured feedback to the Flutter app.</p>
 
-  <br>
-
- >
   <p><strong>Demo Highlights</strong></p>
   <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
     <img src="FounderX-ScreenShots/1.png" alt="Screenshot 1" width="300" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
