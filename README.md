@@ -63,6 +63,18 @@ Or click here:
 | POST   | /api/feedback         | Submit manual feedback (admin)  | Yes           |
 
 Full API docs coming soon (Swagger / Postman collection).
+## 📸 More Screenshots
+
+Here are additional visuals from the FounderX demo and API testing:
+
+<div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">
+  <img src="FounderX-ScreenShots/4.png" alt="Screenshot 4" width="280" style="border-radius: 10px;">
+  <img src="FounderX-ScreenShots/5.png" alt="Screenshot 5" width="280" style="border-radius: 10px;">
+  <img src="FounderX-ScreenShots/6.png" alt="Screenshot 6" width="280" style="border-radius: 10px;">
+  
+</div>
+
+<br>
 ## 🚀 Installation & Run
 
 Follow these steps to set up and run the backend locally:
