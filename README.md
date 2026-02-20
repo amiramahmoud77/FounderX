@@ -6,10 +6,6 @@ Built with **Laravel 10**, it handles user authentication, pitch storage, AI int
 
 ## Demo
 
-Watch the quick demo (1-2 minutes):
-
-[![Demo Video](demo-screenshot.png)](https://drive.google.com/file/d/19VU5X4wPSf-ZCf1DGChqESOXFAHWUT4U/view?usp=sharing)
-
 Or click here:  
 [View Demo Video on Google Drive →](https://drive.google.com/file/d/19VU5X4wPSf-ZCf1DGChqESOXFAHWUT4U/view?usp=sharing)
 ## 🛠 Tech Stack
