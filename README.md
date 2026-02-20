@@ -53,23 +53,60 @@ Or click here:
 | POST   | /api/feedback         | Submit manual feedback (admin)  | Yes           |
 
 Full API docs coming soon (Swagger / Postman collection).
-
 ## 🚀 Installation & Run
 
-1. Clone the repo:
+Follow these steps to set up and run the backend locally:
+
+1. **Clone the repository**  
    ```bash
    git clone https://github.com/amiramahmoud77/FounderX.git
    cd FounderX
+   ```
 
-Install dependencies:Bashcomposer install
-Copy .env and configure:Bashcp .env.example .env
-Set DB_DATABASE, DB_USERNAME, DB_PASSWORD
-Add AI service API key/URL
+2. **Install dependencies**  
+   ```bash
+   composer install
+   ```
 
-Generate key & migrate:Bashphp artisan key:generate
-php artisan migrate
-Run server:Bashphp artisan serve
-Test endpoints with Postman (base URL: http://127.0.0.1:8000/api)
+3. **Copy and configure the .env file**  
+   ```bash
+   cp .env.example .env
+   ```
+   Then open `.env` and update the following:
+
+   ```env
+   DB_DATABASE=your_database_name
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
+   ```
+   Also add your AI service credentials (example):
+   ```env
+   AI_SERVICE_URL=https://api.example.com/analyze
+   AI_API_KEY=sk-your-api-key-here
+   ```
+
+4. **Generate application key & run migrations**  
+   ```bash
+   php artisan key:generate
+   php artisan migrate
+   ```
+
+5. **Start the Laravel development server**  
+   ```bash
+   php artisan serve
+   ```
+   → The API will be live at:  
+   **http://127.0.0.1:8000**
+
+6. **Test the API endpoints**  
+   Use **Postman**, **Insomnia**, or **cURL**  
+   Base URL: `http://127.0.0.1:8000/api`
+
+   Example endpoints to try:
+   - `POST /api/register` → Register new user
+   - `POST /api/login` → Get auth token
+   - `POST /api/pitches` → Submit a startup pitch
+
 
 
 
