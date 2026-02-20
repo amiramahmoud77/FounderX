@@ -1,83 +1,66 @@
-#  FounderX – Backend (Laravel API)
+# FounderX – Backend (Laravel API)
 
-![GitHub Repo stars](https://img.shields.io/github/stars/amiramahmoud77/FounderX?style=social)
-![GitHub top language](https://img.shields.io/github/languages/top/amiramahmoud77/FounderX)
-![GitHub repo size](https://img.shields.io/github/repo-size/amiramahmoud77/FounderX)
+Backend service for **FounderX**, an AI-powered platform that evaluates startup pitches and generates structured scoring & feedback.
 
-Backend service for **FounderX**, an AI-powered platform that evaluates startup pitches and generates structured scoring & feedback.  
-Built using **Laravel**, it handles authentication, database management, and AI integration.
+Built with **Laravel 10**, it handles user authentication, pitch storage, AI integration, and secure API responses for the mobile app.
 
----
+## Demo
 
+Watch the quick demo (1-2 minutes):
+
+[![Demo Video](demo-screenshot.png)](https://drive.google.com/file/d/19VU5X4wPSf-ZCf1DGChqESOXFAHWUT4U/view?usp=sharing)
+
+Or click here:  
+[View Demo Video on Google Drive →](https://drive.google.com/file/d/19VU5X4wPSf-ZCf1DGChqESOXFAHWUT4U/view?usp=sharing)
 ## 🛠 Tech Stack
-- **Backend:** Laravel 10.x (PHP 8.x)  
-- **Database:** MySQL  
-- **ORM:** Eloquent  
-- **Authentication:** Built-in Laravel Auth  
-- **Testing:** Postman  
 
----
+- **Backend**: Laravel 10.x (PHP 8.x)
+- **Database**: MySQL
+- **ORM**: Eloquent
+- **Authentication**: Laravel Built-in Auth + Sanctum (API tokens)
+- **AI Integration**: External AI model (via HTTP requests)
+- **Testing**: Postman / Laravel PHPUnit
+- **Deployment**: Ready for Laravel Forge / Vapor / Heroku
 
-## 🤖 AI Integration
-The core feature is analyzing startup pitches using an external AI model:  
-- Generates structured scoring and detailed feedback  
-- Ensures secure communication and data consistency  
-- Orchestrates requests between the mobile app, AI service, and database  
+## 🤖 AI Integration Flow
 
-**AI Flow:**  
-1. User submits pitch (text input)  
+1. User submits pitch text via Flutter app  
 2. Backend validates & stores pitch  
-3. Sends request to AI service  
-4. Receives scoring & feedback  
-5. Stores results in database  
-6. Returns formatted response to Flutter app
+3. Sends pitch to external AI service  
+4. Receives structured scoring + detailed feedback  
+5. Saves evaluation in DB  
+6. Returns formatted JSON to Flutter app  
 
----
+## 🔐 Security & Authentication
 
-## 🔐 Authentication & Security
-- User authentication (register/login)  
-- Password hashing  
-- Middleware-protected routes  
-- Request validation  
-- Controlled API access
+- Register / Login endpoints  
+- Password hashing (bcrypt)  
+- Sanctum API tokens for protected routes  
+- Request validation & middleware  
+- Rate limiting (optional)
 
----
+## 🗄 Database Schema (Simplified)
 
-## 🗄 Database Design
-- Scalable relational structure:  
-  - **User → Has Many → Pitches**  
-  - **Pitch → Has One → Evaluation**  
-- Normalized schema for clarity and maintainability  
-- Handles data relationships cleanly for frontend consumption
+- **users** → id, name, email, password  
+- **pitches** → id, user_id, title, description, created_at  
+- **evaluations** → id, pitch_id, score (json), feedback (text), created_at  
 
----
+## 📁 API Endpoints (Main)
 
-## 📁 Data & File Handling
-- Structured storage organization  
-- Unique identifiers for pitches  
-- Error handling for failed requests  
+| Method | Endpoint              | Description                     | Auth Required |
+|--------|-----------------------|---------------------------------|---------------|
+| POST   | /api/register         | Register new user               | No            |
+| POST   | /api/login            | Login & get token               | No            |
+| GET    | /api/pitches          | Get user's pitches              | Yes           |
+| POST   | /api/pitches          | Create new pitch                | Yes           |
+| GET    | /api/pitches/{id}     | Get pitch details + evaluation  | Yes           |
+| POST   | /api/feedback         | Submit manual feedback (admin)  | Yes           |
 
----
+Full API docs coming soon (Swagger / Postman collection).
 
-## 🧪 API Endpoints
-| Method | Endpoint            | Description              |
-|--------|--------------------|--------------------------|
-| POST   | `/api/register`     | Register a new user      |
-| POST   | `/api/login`        | Login user               |
-| GET    | `/api/pitches`      | Get all startup pitches  |
-| POST   | `/api/pitches`      | Create a new pitch       |
-| GET    | `/api/investors`    | Get all investors        |
-| POST   | `/api/feedback`     | Submit feedback          |
+## 🚀 Installation & Run
 
----
-
-## 🎯 Backend Responsibilities
-- Manage business logic  
-- Secure system data  
-- Handle AI communication  
-- Structure data for frontend use  
-- Ensure system reliability and scalability
-
-
+1. Clone the repo:
+   ```bash
    git clone https://github.com/amiramahmoud77/FounderX.git
-
+   cd FounderX
