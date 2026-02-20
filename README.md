@@ -60,3 +60,25 @@ Full API docs coming soon (Swagger / Postman collection).
    ```bash
    git clone https://github.com/amiramahmoud77/FounderX.git
    cd FounderX
+
+Install dependencies:Bashcomposer install
+Copy .env and configure:Bashcp .env.example .env
+Set DB_DATABASE, DB_USERNAME, DB_PASSWORD
+Add AI service API key/URL
+
+Generate key & migrate:Bashphp artisan key:generate
+php artisan migrate
+Run server:Bashphp artisan serve
+Test endpoints with Postman (base URL: http://127.0.0.1:8000/api)
+
+
+
+
+
+
+
+
+
+
+
+
