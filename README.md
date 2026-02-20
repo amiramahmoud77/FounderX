@@ -1,3 +1,12 @@
+<div align="center" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px 20px; border-radius: 16px; color: white; margin-bottom: 30px;">
+  <h1 style="margin: 0; font-size: 2.8em;">FounderX – Backend</h1>
+  <p style="font-size: 1.3em; margin: 10px 0;">AI-Powered Startup Pitch Evaluation Platform</p>
+  
+  <p style="font-size: 1.1em; max-width: 700px; margin: 20px auto;">
+    Secure Laravel API that evaluates startup pitches, integrates with external AI models, and delivers structured scoring & detailed feedback to the Flutter mobile app.
+  </p>
+</div>
+<br>
 # FounderX – Backend (Laravel API)
 
 Backend service for **FounderX**, an AI-powered platform that evaluates startup pitches and generates structured scoring & feedback.
